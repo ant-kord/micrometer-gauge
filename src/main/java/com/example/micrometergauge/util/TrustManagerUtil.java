@@ -16,6 +16,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class TrustManagerUtil {
                 .filter(X509TrustManager.class::isInstance)
                 .map(X509TrustManager.class::cast)
                 .map(trustManager -> Arrays.asList(trustManager.getAcceptedIssuers()))
-                .flatMap(stream -> stream.stream())
+                .flatMap(Collection::stream)
                 .map(x509Certificate -> {
                     Date expiresOn= x509Certificate.getNotAfter();
                     Date now = new Date();
