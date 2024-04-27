@@ -41,11 +41,12 @@ public class TrustManagerUtil {
                     long expires = (expiresOn.getTime() - now.getTime())/(1000*60*60*24);
                     return new CertificateDTO(CertUtil.subjectCN(x509Certificate), expires);
                 })
+                .peek(System.out::println)
                 .collect(Collectors.toList());
 
     }
 
-    public KeyStore loadKeyStore() {
+    private KeyStore loadKeyStore() {
         String relativeCacertsPath = "/lib/security/cacerts".replace("/", File.separator);
         String filename = System.getProperty("java.home") + relativeCacertsPath;
         KeyStore keystore;

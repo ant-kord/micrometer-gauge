@@ -11,13 +11,10 @@ import java.security.KeyStoreException;
 import java.security.cert.Certificate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TrustMangerUtilTest {
-
-    private static final String ALIAS = "kordyukevich";
 
     @Autowired
     private TrustManagerUtil trustManagerUtil;
@@ -30,11 +27,11 @@ public class TrustMangerUtilTest {
     }
 
     @Test
-    void whenLoadingKeyStore_thenCertificateIsPresent() throws KeyStoreException {
-        KeyStore keyStore = trustManagerUtil.loadKeyStore();
+    void whenLoadingKeyStore_thenCertificateIsPresent() throws Exception {
+        List<CertificateDTO> certificates = trustManagerUtil.getCertificates();
 
-        Certificate certificate = keyStore.getCertificate(ALIAS);
+        CertificateDTO certificate = new CertificateDTO("Amazon Root CA 1", 5012);
 
-        assertNotNull(certificate);
+        assertTrue(certificates.contains(certificate));
     }
 }
