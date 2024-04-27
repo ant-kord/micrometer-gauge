@@ -31,11 +31,9 @@ public class MetricsCertificate {
     @Scheduled(cron = "0 0 0 * * ?")
     public void getCertificateExpiresDaysGauges() throws Exception {
 
-        List<CertificateDTO> certificates = trustManagerUtil.readCertificates();
+        List<CertificateDTO> certificates = trustManagerUtil.getCertificates();
         expiresDaysCount.register(
                 certificates.stream()
-                        .filter(certificateDTO -> certificateDTO.getName() != null)
-                        .sorted((cert1, cert2) -> cert1.getName().compareTo(cert2.getName()))
                         .map(certificateDTO -> MultiGauge.Row.of(Tags.of(
                                 "name", ""+ certificateDTO.getName(),
                                 "expiresDays", ""+certificateDTO.getExpires()),  certificates.size()))

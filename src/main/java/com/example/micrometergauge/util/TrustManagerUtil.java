@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class TrustManagerUtil {
 
-    public List<CertificateDTO> readCertificates() throws Exception {
+    public List<CertificateDTO> getCertificates() throws Exception {
         KeyStore keyStore = loadKeyStore();
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(keyStore);
@@ -45,7 +45,7 @@ public class TrustManagerUtil {
 
     }
 
-    private KeyStore loadKeyStore() {
+    public KeyStore loadKeyStore() {
         String relativeCacertsPath = "/lib/security/cacerts".replace("/", File.separator);
         String filename = System.getProperty("java.home") + relativeCacertsPath;
         KeyStore keystore;
